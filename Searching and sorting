@@ -43,4 +43,112 @@
            }
         
       3.
- 
+      
+      4. Largest sum contigous array
+      
+       int a[] = {-2, -3, 4, -1, -2, 1, 5, -3};
+       int get(int arr[],int n){
+           int maxsofar=INT_MIN,maxend=0;
+           for(int i=0;i<n;i++){
+              maxend=maxend+arr[i];
+              if(maxsofar<maxend){
+                maxsofar=maxend;
+              }
+              if(maxend<0){
+              maxend=0;
+              }
+           }
+           return maxsofar;
+       }
+       
+     5.Minimum number of platforms
+     
+     int arr[] = { 900, 940, 950, 1100, 1500, 1800 };
+    int dep[] = { 910, 1200, 1120, 1130, 1900, 2000 };
+    
+    int get(int arr[],int dept[],int n){
+      sort(arr,arr+n);
+      sort(dept,dept+n);
+      int plat=1,result=1;
+      int i=1,j=0;
+      while(i<n && j<n){
+        if(arr[i]<=dept[j]){
+           plat++;
+           i++;
+        }
+        else if(dept[j]<arr[i]){
+        plat--;
+        j++;
+        }
+        if(plat>result){              //O(nlogn),O(1)
+        result=plat;
+        }
+      
+      }
+      return result;
+    }
+   
+   6.Find the missing number
+   
+   int arr[] = { 1, 2, 4, 5, 6 };
+   int find(int arr[],int n)
+   {
+     int x1=arr[0];
+     int x2=1;
+     for(int i=1;i<n;i++){
+       x1=x1^arr[i];
+     }
+     for(int i=2;i<=n+1;i++){
+       x2=x2^i;
+     }
+     return x1^x2;
+   }
+   
+   
+   7.Merge 2 sorted arrays
+   
+   int arr1[] = {1, 3, 5, 7};
+   int arr2[] = {2, 4, 6, 8};
+   
+   void merge(int arr1[],int arr2[],int arr3[],int n1,int n2,int n3){
+      int i=0,j=0,k=0;
+      while(i<n1 && j<n2){
+        if(arr1[i]<arr2[j]){
+           arr3[k++]=arr1[i++];
+        }
+        else if(arr1[i]>arr2[j]){
+           arr3[k++]=arr2[j++];
+        }
+      }
+      while(i<n1){
+      arr3[k++]=arr1[i++];
+      }
+      while(j<n2){
+      arr3[k++]=arr2[j++];
+      }
+   }
+   
+   
+   8.Search in a sorted and rotated array
+   
+   int arr[] = { 4, 5, 6, 7, 8, 9, 1, 2, 3 };
+   
+   void search(int arr[],int low,int high,int key){
+     int mid=low+high/2;
+     if(arr[mid]==key){
+      return mid;
+     }
+     if(arr[low]<=arr[mid]){
+       if(key>=arr[low] && key<=arr[mid]){
+         return search(arr,low,mid-1,key);
+       }
+       return search(arr,mid+1,high,key);
+     }
+     if(key>=arr[mid] && key<=arr[high]){
+        return search(arr,mid+1,high,key);
+     }
+     return search(arr,low,mid-1,key);
+   }
+   
+   
+  9. 
