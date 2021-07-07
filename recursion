@@ -1,0 +1,25 @@
+1.generate all possible parenthesis
+   int n=4;
+   void generate(int n){
+      generateall(n/2,n/2,"");
+   }
+   void generateall(int open,int close,string s){
+     if(open==0 && close==0){
+        cout<<s<<endl;
+     }
+     if(open>close){
+       return;
+     }
+     if(open>0){
+        return generateall(open-1,close,s+"(");
+     }
+     if(close>0){
+        return generateall(open,close-1,s+")");
+     }
+   }
+   
+   
+   2.Possible words from phone digits
+   
+      vector<char> keypad[] ={ {}, {}, { 'a', 'b', 'c' },{ 'd', 'e', 'f' },{ 'g', 'h', 'i' },{ 'j', 'k', 'l' },{ 'm', 'n', 'o' },{ 'p', 'q', 'r', 's'},{ 't', 'u', 'v' },{ 'w', 'x', 'y', 'z'} };
+      
