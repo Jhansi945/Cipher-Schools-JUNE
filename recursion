@@ -8,7 +8,7 @@
         cout<<s<<endl;
      }
      if(open>close){
-       return;
+       return;                        O(2^N)
      }
      if(open>0){
         return generateall(open-1,close,s+"(");
@@ -22,4 +22,109 @@
    2.Possible words from phone digits
    
       vector<char> keypad[] ={ {}, {}, { 'a', 'b', 'c' },{ 'd', 'e', 'f' },{ 'g', 'h', 'i' },{ 'j', 'k', 'l' },{ 'm', 'n', 'o' },{ 'p', 'q', 'r', 's'},{ 't', 'u', 'v' },{ 'w', 'x', 'y', 'z'} };
-      
+      void getall(vector<string>&result,string s,int k,string p){
+         if(k==s.length()){
+             result.push_back(p);
+             return;
+         }
+         string g=keypad[s[k]-'0'];
+         for(int i=0;i<g.length();i++){
+            p+=g[i];
+            getall(result,s,k+1,p);
+            p.pop_back();
+         }                                      
+      }
+      vector<string> get(string s){
+      vector<string>result;
+      getall(result,s,0,"");
+      return result;
+      }
+     vector<string>v=get("2");
+     
+    3.total decoding message
+    
+    vector<string> mymap = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+void decodeStringHelper(vector<string>& result, string& digits, int index, string strSoFar) {
+    if (index >= digits.size()) {
+        result.push_back(strSoFar);
+        return;
+    }
+    int idx1 = int(digits[index] - '0');
+    if (idx1 == 0) {
+        return;
+    }
+    decodeStringHelper(result, digits, index+1, strSoFar + mymap[idx1]);
+
+    if (index + 1 >= digits.size()) {
+        return;
+    }
+
+    int idx2 = int(digits[index + 1] - '0');
+    if (10*idx1 + idx2 <= 26)
+        decodeStringHelper(result, digits, index+2, strSoFar + mymap[10*idx1 + idx2]);
+}
+vector<string> decodeString(string& digits) {
+    if (digits == "") {
+        return vector<string>{};
+    }
+    vector<string> result;
+    decodeStringHelper(result, digits, 0, "");
+    return result; 
+
+}
+int main() {
+    string decode = "20"; // 0xqndvcnbwe
+    vector<string> result = decodeString(decode);
+    for (string valid: result) {
+        cout << valid << "\n";
+    }
+}
+
+    4.Count all possible paths from beginnng of a matrix to end
+    
+    int m=2,int n=3;
+    //recursive solution
+    
+    int find(int m,int n){
+       if(m==1 || n==1){                     
+          return 1;
+       }
+       return find(m-1,n)+find(m,n-1); // if diagonal allowed then find(m-1,n-1) is also write
+    }
+    
+    //dp problem
+    
+    int dp[m][n];
+    for(int i=0;i<m;i++){
+      dp[i][0]=1;
+    }
+    for(int i=0;i<n;i++){
+       dp[0][i]=1;
+    }
+    for(int i=1;i<m;i++){                   O(MN)
+       for(int j=1;i<n;j++){
+          dp[i][j]=dp[i-1][j]+d[]i][j-1];
+       }
+    }
+    return dp[m-1][n-1];
+    
+    5.NOn zero digit fatorial
+    //0-9
+    int dig[]={1,1,2,6,4,2,2,4,2,8};
+    int find(int n)
+    {
+       if(n>=0 && n<=9){
+          return dig[n];
+       }
+       if(((n/10)%10)%2==0)
+       {
+           return (6*find(floor(n/5))*dig(n%10))%10;
+       }
+       else
+       {
+           return (4*find(floor(n/5))*dig(n%10))%10;
+       }
+    }
+    
+    
+    6.
