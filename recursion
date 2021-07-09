@@ -127,4 +127,114 @@ int main() {
     }
     
     
-    6.
+    6. permutations of string
+    void findall(vector<string>&result,int start,int end,string s){
+       if(start>=end){
+          result.push_back(s);
+          return;
+       }
+       for(int i=start;i<=end;i++){
+          swap(&s[i],&s[start]);
+          findall(result,start+1,end,s);
+          swap(&s[i],&s[start]);
+       }
+    }
+    vector<string> find(string s)
+    {
+       vector<string>result;
+       findall(result,0,s.length()-1,s);
+       return result;
+    }
+    
+    7.Rat in a maze
+    
+    int possibleMoves = 4;
+int xMoves[] = {1, -1, 0, 0};
+int yMoves[] = {0, 0, 1, -1};
+bool isSafe(vector<vector<bool>> &maze, vector<vector<bool>> &visited, int r, int c, int R, int C)
+{
+    return (r >= 0 && r < R && c >= 0 && c < C && maze[r][c] && !visited[r][c]);
+}
+
+bool ratIntheMazeHelper(vector<vector<bool>> &maze, vector<vector<bool>> &visited, int r, int c, int R, int C)
+{
+    if (r == R - 1 && c == C - 1 && maze[r][c])
+    {
+        visited[r][c] = true;
+        return true;
+    }
+    
+    if (isSafe(maze, visited, r, c, R, C))
+    {
+        visited[r][c] = true;
+        for (int i = 0; i < possibleMoves; i++)
+        {
+            int nextXMove = r + xMoves[i];
+            int nextYMove = c + yMoves[i];
+            if (ratIntheMazeHelper(maze, visited, nextXMove, nextYMove, R, C))
+            {
+                return true;
+            }
+        }
+        visited[r][c] = false;
+        return false;
+    }
+
+    return false;
+}
+void ratInMaze(vector<vector<bool>>& maze)
+{
+    int R = maze.size();
+    if (R == 0)
+    {
+        
+        return;
+    }
+    int C = maze[0].size();
+    vector<vector<bool>> visited(C, vector<bool>(C, false));
+    if (ratIntheMazeHelper(maze, visited, 0, 0, R, C))
+    {
+        cout << "Found the path\n";
+        for (vector<bool> r : visited)
+        {
+            for (bool b : r)
+            {
+                cout << (b == true ? 1 : 0) << "\t";
+            }
+            cout << "\n";
+        }
+    } else {
+        cout << "No Paths Found\n";
+    }
+}
+
+   10.subset problem
+   
+   bool issubsetsum(int set[],int n,int sum)
+  {
+	bool subset[n+1][sum+1];
+	for(int i=0;i<=n;i++)
+	{
+		subset[i][0]=true;
+	}
+	for(int i=0;i<=sum;i++)
+	{
+		subset[0][i]=false;
+	}
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=sum;j++)
+		{
+			if(j<set[i-1])
+			{
+				subset[i][j]=subset[i-1][j];
+			}
+			if(j>=set[i-1])
+			{
+				subset[i][j]=subset[i-1][j] || subset[i-1][j-set[i-1]];
+			}
+		}
+	}
+	return subset[n][sum];
+	
+}
