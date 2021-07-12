@@ -1,0 +1,17 @@
+1. reverse a linked list
+
+   1->2->3->null
+   3->2->1->null
+   
+   void reverse(node*root){
+      node*curr=root,*prev=null,*nxt=null;
+      while(curr!=NULL){
+         nxt=curr->next;
+         curr->next=prev;
+         prev=curr;
+         curr=nxt;
+      }
+      root=prev;
+   }
+   
+  2. 
