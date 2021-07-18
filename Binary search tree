@@ -1,0 +1,151 @@
+1.search in bst
+   Node*search(Node*root,int key){
+      if(root==NULL || root->data==key){
+         return root;
+      }
+      if(root->data>key){
+         return search(root->left,key);
+      }
+      return return(root->right,key);
+   }
+   
+2.insert in bst
+   
+   node*insert(node*root,int key){
+      if(root==null){
+        return new node(key);
+      }
+      if(key>root->data){
+         root->right=insert(root->right,key);
+      }
+      if(key<root->data){
+         root->left=insert(root->left,key);
+      }
+      return root;
+   }
+   
+   
+3.delete a node in bst
+
+   node*delete(node*root,int key){
+      if(root==NULL){
+         return NULL;
+      }
+      if(key>root->data){
+         root->right=delete(root->right,key);
+      }
+      else if(key<root->data){
+         root->left=delete(root->left,key);
+      }
+      else{
+         // has no child
+         if(root->left==NULL && root->right==NULL){
+            return NULL;
+         }
+         if(root->left==NULL){
+            node*temp=root->right;
+           // temp->key=root->key;
+            free(root);
+            return temp;
+         }
+         if(root->right==NULL){
+           node*temp=root->left;
+           free(root);
+           return temp;
+         }
+         node*temp=getmin(root->right);
+         root->key=temp->key;
+         root->right=delete(root->right,temp->key);
+         
+      }
+      return root;
+   }
+   
+   
+4.build bst from given preorder traversal
+
+   int pre[] = { 10, 5, 1, 7, 40, 50 };
+    int size = sizeof(pre) / sizeof(pre[0]);
+    node* root = constructTree(pre, size);
+    
+    
+    node*constructTree(int pre[],int size){
+       int preindex=0;
+       return build(pre,&preindex,pre[0],INT_MIN,INT_MAX,size);
+       
+    }
+    
+    node*build(int pre[],int *preindex,int key,int min,int max,int size){
+       if(*preindex>=size){
+          return NULL;
+       }
+       node*root=NULL;
+       if(key>min && key<max){
+          root=new node(key);
+          *preindex=*preindex+1;
+           if(*preindex<size){
+              root->left=build(pre,preindex,pre[*preindex],min,key,size);   
+           }
+           if(*preindex<size){
+              root->right=build(pre,preindex,pre[*preindex],key,max,size);
+           }
+       }
+       return root;
+    }
+   
+   
+5.kth smallest/largest element in an array
+
+  int arr[]={12,3,5,7,19};
+  int n=5;
+  int k=2;
+  cout<<find(arr,n,k);
+  
+  class minheap{
+    int *harr;//pointer to array of elements in heap
+    int capacity;//maximum possible size of heap
+    int heap_size;//curr size of heap
+    
+    public:
+       minheap(int a[],int size);
+       void minheapify(int i);
+       int left(int i){
+         return 2*i+1;
+       }
+       int right(int i){
+         return 2*i+2;
+       }
+       
+  };
+  minheap::minheap(int arr[],int size){
+     heap_size=size;
+     harr=arr;
+     int i=(heap_size-1)/2;
+     while(i>=0){
+       minheapify(i);
+       i--;
+     }
+  }
+  minheap::minheapify(int i){
+    int l=left(i);
+    int r=right(i);
+    int smallest=i;
+    if(l<heap_size && harr[l]<harr[i]){
+      smallest=l;
+    }
+    if(r<heap_size && harr[r]<harr[smallest]){
+      smallest=r;
+    }
+    if(smallest!=i){
+      swap(&harr[i],&harr[smallest]);
+      minheapify(smallest);
+    }
+  }
+  
+  
+  int kthsmallest(int arr[],int n,int k){
+     minheap mh(arr,n);
+     for(int i=0;i<k-1;i++){
+       
+     }
+  }
